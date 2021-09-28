@@ -19,6 +19,8 @@ jobs:
         run: |
           git pull
           TZ=Asia/Tokyo date '+%Y%m%d%H%M' > time.txt
+          git config --local user.email "info@laboneko.jp"
+          git config --local user.name "labeneko"
           git add .
           git commit -m "時間を保存"
       - name: Push changes
