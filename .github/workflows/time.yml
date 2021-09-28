@@ -21,7 +21,25 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
       - name: checkout
         uses: actions/checkout@v2
-      - name: Commit files
+      - name: Commit kawamachi
+        run: |
+          git clone git@github.com:labeneko/kawamachi.git output
+          TZ=Asia/Tokyo date '+%Y%m%d%H%M' > output/time.txt
+          git config --local user.email "info@laboneko.jp"
+          git config --local user.name "labeneko"
+          git add .
+          git commit -m "時間を保存" -a || true
+      - name: Pushes to kawamachi
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
+        with:
+          source-directory: 'output'
+          destination-github-username: 'labeneko'
+          destination-repository-name: 'kawamachi'
+          user-email: info@laboneko.jp
+          target-branch: main
+      - name: Commit daimaru
         run: |
           git clone git@github.com:labeneko/daimaru.git output
           TZ=Asia/Tokyo date '+%Y%m%d%H%M' > output/time.txt
@@ -29,7 +47,7 @@ jobs:
           git config --local user.name "labeneko"
           git add .
           git commit -m "時間を保存" -a || true
-      - name: Pushes to another repository
+      - name: Pushes to daimaru
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
