@@ -21,12 +21,9 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
       - name: checkout
         uses: actions/checkout@v2
-        with:
-          repository: labeneko/kawamachi
       - name: Commit files
         run: |
-          git pull
-          mkdir output
+          git clone git@github.com:labeneko/daimaru.git output
           TZ=Asia/Tokyo date '+%Y%m%d%H%M' > output/time.txt
           git config --local user.email "info@laboneko.jp"
           git config --local user.name "labeneko"
