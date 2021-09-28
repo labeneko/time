@@ -18,6 +18,8 @@ jobs:
       - name: Commit files
         run: |
           git pull
+          git checkout main
+          git reset --hard origin/main
           TZ=Asia/Tokyo date '+%Y%m%d%H%M' > time.txt
           git config --local user.email "info@laboneko.jp"
           git config --local user.name "labeneko"
