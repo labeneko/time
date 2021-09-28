@@ -31,4 +31,9 @@ jobs:
           git config --local user.name "labeneko"
           git add .
           git commit -m "時間を保存" -a || true
-          git push origin main
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          repository: labeneko/kawamachi
+          github_token: ${{ secrets.TOKEN }}
+          branch: main
