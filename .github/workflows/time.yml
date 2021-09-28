@@ -26,14 +26,19 @@ jobs:
       - name: Commit files
         run: |
           git pull
-          TZ=Asia/Tokyo date '+%Y%m%d%H%M' > time.txt
+          mkdir output
+          TZ=Asia/Tokyo date '+%Y%m%d%H%M' > output/time.txt
           git config --local user.email "info@laboneko.jp"
           git config --local user.name "labeneko"
           git add .
           git commit -m "時間を保存" -a || true
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
         with:
-          repository: labeneko/kawamachi
-          github_token: ${{ secrets.TOKEN }}
-          branch: main
+          source-directory: 'output'
+          destination-github-username: 'labeneko'
+          destination-repository-name: 'kawamachi'
+          user-email: info@laboneko.jp
+          target-branch: main
