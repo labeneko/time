@@ -36,6 +36,6 @@ jobs:
         with:
           source-directory: 'output'
           destination-github-username: 'labeneko'
-          destination-repository-name: 'kawamachi'
+          destination-repository-name: 'daimaru'
           user-email: info@laboneko.jp
           target-branch: main
