@@ -26,15 +26,9 @@ jobs:
       - name: Commit files
         run: |
           git pull
-          git checkout main
-          git reset --hard origin/main
           TZ=Asia/Tokyo date '+%Y%m%d%H%M' > time.txt
           git config --local user.email "info@laboneko.jp"
           git config --local user.name "labeneko"
           git add .
           git commit -m "時間を保存" -a || true
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.TOKEN }}
-          branch: main
+          git push origin main
