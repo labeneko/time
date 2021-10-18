@@ -1,0 +1,41 @@
+name: keihin00793
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Setup SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${SSH_KEY}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Commit
+        run: |
+          git clone git@github.com:labeneko/keihin00793.git keihin00793
+          TZ=Asia/Tokyo date '+%Y%m%d%H%M' > keihin00793/time.txt
+          git config --local user.email "info@laboneko.jp"
+          git config --local user.name "labeneko"
+          git add .
+          git commit -m "時間を保存" -a || true
+      - name: Push
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
+        with:
+          source-directory: 'keihin00793'
+          destination-github-username: 'labeneko'
+          destination-repository-name: 'keihin00793'
+          user-email: info@laboneko.jp
+          target-branch: main
