@@ -29,13 +29,4 @@ jobs:
           git config --local user.name "labeneko"
           git add .
           git commit -m "時間を保存" -a || true
-      - name: Push
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
-        with:
-          source-directory: 'keihin00796'
-          destination-github-username: 'labeneko'
-          destination-repository-name: 'keihin00796'
-          user-email: info@laboneko.jp
-          target-branch: main
+          git push origin main
