@@ -29,6 +29,7 @@ jobs:
           git config --local user.name "labeneko"
           git add .
           git commit -m "時間を保存" -a || true
+          git push origin main
       - name: Push
         uses: cpina/github-action-push-to-another-repository@main
         env:
