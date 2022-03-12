@@ -23,19 +23,11 @@ jobs:
         uses: actions/checkout@v2
       - name: Commit
         run: |
-          git clone git@github.com:labeneko/keihin00783.git keihin00783
-          TZ=Asia/Tokyo date '+%Y%m%d%H%M' > keihin00783/time.txt
+          git clone --depth=1 git@github.com:labeneko/keihin00783.git keihin00783
+          cd keihin00783
+          TZ=Asia/Tokyo date '+%Y%m%d%H%M' > time.txt
           git config --local user.email "info@laboneko.jp"
           git config --local user.name "labeneko"
           git add .
           git commit -m "時間を保存" -a || true
-      - name: Push
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
-        with:
-          source-directory: 'keihin00783'
-          destination-github-username: 'labeneko'
-          destination-repository-name: 'keihin00783'
-          user-email: info@laboneko.jp
-          target-branch: main
+          git push origin main
