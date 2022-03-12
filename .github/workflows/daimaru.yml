@@ -23,8 +23,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Commit
         run: |
-          git clone git@github.com:labeneko/daimaru.git daimaru
-          TZ=Asia/Tokyo date '+%Y%m%d%H%M' > daimaru/time.txt
+          git clone --depth=1 git@github.com:labeneko/daimaru.git daimaru
+          cd daimaru
+          TZ=Asia/Tokyo date '+%Y%m%d%H%M' > time.txt
           git config --local user.email "info@laboneko.jp"
           git config --local user.name "labeneko"
           git add .
